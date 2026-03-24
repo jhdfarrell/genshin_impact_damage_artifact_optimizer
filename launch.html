@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>原神理论优化器</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header class="header">
+    <h1>原神理论优化器</h1>
+    <span class="header-credit">作者 jhdfarrell_，意见反馈 3211994109@qq.com</span>
+  </header>
+  <div id="save-load-toolbar" class="save-load-toolbar">
+    <button type="button" id="save-load-save-btn" class="save-load-btn">保存</button>
+    <button type="button" id="save-load-load-btn" class="save-load-btn">加载</button>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn active" data-page="base">基础面板</button>
+    <button class="nav-btn" data-page="buff">加成</button>
+    <button class="nav-btn" data-page="artifacts">圣遗物</button>
+    <button class="nav-btn" data-page="cycle">循环流程</button>
+    <button class="nav-btn" data-page="stats">词条理论最优分配</button>
+    <button class="nav-btn" data-page="frost">祝圣之霜使用优化</button>
+    <button class="nav-btn" data-page="dust">启圣之尘使用优化</button>
+  </nav>
+  <main class="content">
+    <section id="base" class="page active">
+      <h2>基础面板</h2>
+      <div class="base-panel-form" id="base-panel-form">
+        <div class="base-panel-row">
+          <label>角色等级</label>
+          <input type="number" id="base-charLevel" name="charLevel" step="1" placeholder="角色等级" min="1" max="100">
+        </div>
+        <div class="base-panel-row">
+          <label>怪物等级</label>
+          <input type="number" id="base-monsterLevel" name="monsterLevel" step="1" placeholder="怪物等级" min="1" max="110">
+        </div>
+        <div class="base-panel-row">
+          <label>生命值</label>
+          <input type="number" id="base-hp" name="hp" step="any" placeholder="角色基础生命值">
+        </div>
+        <div class="base-panel-row">
+          <label>攻击力</label>
+          <input type="number" id="base-atk" name="atk" step="any" placeholder="角色基础攻击力">
+        </div>
+        <div class="base-panel-row">
+          <label>防御力</label>
+          <input type="number" id="base-def" name="def" step="any" placeholder="角色基础防御力">
+        </div>
+        <div class="base-panel-row">
+          <label>元素精通</label>
+          <input type="number" id="base-em" name="em" step="1" placeholder="角色基础元素精通">
+        </div>
+        <div class="base-panel-row">
+          <label>充能效率</label>
+          <input type="number" id="base-er" name="er" step="any" placeholder="角色基础充能效率">
+        </div>
+        <div class="base-panel-row">
+          <label>暴击率</label>
+          <input type="number" id="base-critRate" name="critRate" step="any" placeholder="暴击率（%）">
+        </div>
+        <div class="base-panel-row">
+          <label>暴击伤害</label>
+          <input type="number" id="base-critDmg" name="critDmg" step="any" placeholder="暴击伤害（%）">
+        </div>
+        <div class="base-panel-row base-panel-resist-header">
+          <label>怪物抗性</label>
+        </div>
+        <div class="base-panel-row">
+          <label>物理</label>
+          <input type="number" id="base-resistPhys" name="resistPhys" step="any" placeholder="物理抗性">
+        </div>
+        <div class="base-panel-row">
+          <label>火</label>
+          <input type="number" id="base-resistPyro" name="resistPyro" step="any" placeholder="火抗性">
+        </div>
+        <div class="base-panel-row">
+          <label>水</label>
+          <input type="number" id="base-resistHydro" name="resistHydro" step="any" placeholder="水抗性">
+        </div>
+        <div class="base-panel-row">
+          <label>雷</label>
+          <input type="number" id="base-resistElectro" name="resistElectro" step="any" placeholder="雷抗性">
+        </div>
+        <div class="base-panel-row">
+          <label>冰</label>
+          <input type="number" id="base-resistCryo" name="resistCryo" step="any" placeholder="冰抗性">
+        </div>
+        <div class="base-panel-row">
+          <label>风</label>
+          <input type="number" id="base-resistAnemo" name="resistAnemo" step="any" placeholder="风抗性">
+        </div>
+        <div class="base-panel-row">
+          <label>草</label>
+          <input type="number" id="base-resistDendro" name="resistDendro" step="any" placeholder="草抗性">
+        </div>
+        <div class="base-panel-row">
+          <label>岩</label>
+          <input type="number" id="base-resistGeo" name="resistGeo" step="any" placeholder="岩抗性">
+        </div>
+      </div>
+    </section>
+    <section id="buff" class="page">
+      <h2>加成</h2>
+      <div id="buff-panels" class="buff-panels"></div>
+    </section>
+    <section id="artifacts" class="page">
+      <h2>圣遗物</h2>
+      <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-bottom:0.5rem;">
+        <button type="button" id="artifact-auto-best-btn" class="artifact-set-effect-btn">一键配置最优套装</button>
+      </div>
+      <div id="artifact-effective-substats" class="artifact-effective-substats">
+        <span class="artifact-effective-substats-label">有效词条:</span>
+        <div id="artifact-effective-substats-list" class="artifact-effective-substats-list"></div>
+        <span class="artifact-effective-substats-hint">*最多选5个有效词条</span>
+      </div>
+      <div id="artifact-substat-total" class="artifact-substat-total">总副词条价值: <span
+          id="artifact-substat-total-value">—</span></div>
+      <div id="artifact-slot-panels" class="artifact-slot-panels"></div>
+      <div class="artifact-set-effect">
+        <div class="artifact-set-effect-title">套装效果</div>
+        <button type="button" id="artifact-add-set-effect-btn" class="artifact-set-effect-btn">添加套装效果</button>
+        <div id="artifact-set-effect-list" class="artifact-set-effect-list"></div>
+      </div>
+    </section>
+    <section id="cycle" class="page">
+      <h2>循环流程</h2>
+      <div class="cycle-page-layout">
+        <div class="cycle-flow-area">
+          <div id="cycle-template-panel" class="cycle-template-panel"></div>
+          <div id="cycle-flow-list" class="cycle-flow-list"></div>
+        </div>
+        <div class="cycle-stats-panel">
+          <div class="cycle-stats-panel-title">统计数据</div>
+          <div class="cycle-stats-row">
+            <span class="cycle-stats-label">总伤害</span>
+            <span id="cycle-total-damage" class="cycle-stats-value">—</span>
+          </div>
+          <button type="button" id="cycle-calc-btn" class="cycle-calc-btn">计算</button>
+        </div>
+      </div>
+    </section>
+    <section id="stats" class="page">
+      <h2>词条理论最优分配</h2>
+      <div class="stats-opt-panel">
+        <p class="stats-opt-desc">
+          固定圣遗物总词条价值时，计算所有有效词条的最优分配。
+        </p>
+        <div class="stats-opt-row">
+          <span class="stats-opt-label">当前总词条价值（主+副）</span>
+          <span id="stats-total-value" class="stats-opt-value">—</span>
+        </div>
+        <div class="stats-opt-row" style="font-size:0.85rem;color:#888;">
+          <span class="stats-opt-label">主词条价值</span>
+          <span id="stats-main-value">—</span>
+          <span class="stats-opt-label" style="margin-left:0.75rem">副词条价值</span>
+          <span id="stats-substat-value">—</span>
+        </div>
+        <div class="stats-opt-row" style="font-size:0.85rem;color:#888;">
+          <label class="stats-opt-fix-main">
+            <input type="checkbox" id="stats-fix-main" checked>
+            固定主词条
+          </label>
+        </div>
+        <div class="stats-opt-row stats-opt-limit-row">
+          <span class="stats-opt-label">优化时总词条价值限制</span>
+          <div class="stats-opt-limit-wrap">
+            <span class="stats-opt-limit-label stats-opt-limit-min">0</span>
+            <div class="stats-opt-limit-track" id="stats-limit-track" role="slider" aria-valuemin="0" aria-valuemax="0"
+              aria-valuenow="0" tabindex="0">
+              <span class="stats-opt-limit-thumb" id="stats-limit-thumb"></span>
+            </div>
+            <span class="stats-opt-limit-label stats-opt-limit-max" id="stats-limit-max-label">—</span>
+          </div>
+          <span class="stats-opt-limit-value" id="stats-limit-value">—</span>
+          <button type="button" id="stats-limit-reset-btn" class="stats-opt-reset-btn"
+            title="恢复为当前装备总价值">设为当前总价值</button>
+        </div>
+        <div class="stats-opt-row" style="font-size:0.8rem;color:#888;">
+          <span class="stats-opt-limit-hint">*右边的上限是当前装备主词条下的最高可能总价值</span>
+        </div>
+        <div class="stats-opt-row">
+          <button type="button" id="stats-opt-calc-btn" class="dust-calc-btn">开始优化</button>
+          <span id="stats-opt-status" class="stats-opt-status"></span>
+        </div>
+        <div id="stats-opt-result" class="stats-opt-result" aria-live="polite"></div>
+      </div>
+    </section>
+    <section id="frost" class="page">
+      <h2>祝圣之霜使用优化</h2>
+      <div class="dust-panel">
+        <div class="dust-row">
+          <label for="frost-artifact-select">选择槽位</label>
+          <select id="frost-artifact-select" class="dust-select">
+            <option value="">— 请选择 —</option>
+          </select>
+          <label style="margin-left:0.75rem;">
+            最低锁定词条强化次数
+            <select id="frost-min-lock-rolls" class="dust-select"
+              style="width:auto;min-width:80px;margin-left:0.35rem;">
+              <option value="2" selected>2 次</option>
+              <option value="3">3 次</option>
+              <option value="4">4 次</option>
+            </select>
+          </label>
+          <label style="margin-left:0.75rem;">
+            最大提升判定阈值
+            <span id="frost-max-threshold-help-trigger" class="dust-help-inline">?</span>
+            <input id="frost-max-threshold" class="dust-select" type="number" min="0" max="100" step="0.001" value="0"
+              style="width:6rem;margin-left:0.35rem;padding-right:0;">
+            <span style="margin-left:0.25rem;font-size:0.85rem;color:#9ab;">%</span>
+          </label>
+          <button type="button" id="frost-calc-btn" class="dust-calc-btn" style="margin-left:auto;">计算</button>
+        </div>
+        <div class="dust-layout">
+          <div class="dust-left">
+            <div class="artifact-effective-substats" style="margin-bottom:0.5rem;">
+              <span class="artifact-effective-substats-label">生成主词条:</span>
+              <select id="frost-main-stat-select" class="dust-select"
+                style="flex:1;min-width:11rem;margin-left:0.35rem;">
+                <option value="">— 请先选择槽位 —</option>
+              </select>
+            </div>
+            <div class="artifact-effective-substats" id="frost-fixed-substats-wrap">
+              <span class="artifact-effective-substats-label">固定副词条:</span>
+              <div id="frost-substats-list" class="artifact-substat-rows">
+                <div class="artifact-substat-row">
+                  <select id="frost-fixed-substat-0" class="dust-select" style="flex:1;min-width:11rem">
+                    <option value="">— 请选择 —</option>
+                  </select>
+                </div>
+                <div class="artifact-substat-row">
+                  <select id="frost-fixed-substat-1" class="dust-select" style="flex:1;min-width:11rem">
+                    <option value="">— 请选择 —</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dust-right" id="frost-result" aria-live="polite">
+            <p class="dust-result-line"><span class="dust-label">原循环总伤害</span><span id="frost-original-total">—</span>
+            </p>
+            <p class="dust-result-line"><span class="dust-label">期望循环总伤害</span><span id="frost-expected-total">—</span>
+            </p>
+            <p class="dust-result-line"><span class="dust-label">期望提升</span><span id="frost-delta">—</span></p>
+            <p class="dust-result-line"><span class="dust-label">提升概率</span><span id="frost-prob-improve">—</span></p>
+            <p class="dust-result-line"><span class="dust-label">最大循环总伤害</span><span id="frost-max-total">—</span></p>
+            <p class="dust-result-line"><span class="dust-label">最大提升</span><span id="frost-max-delta">—</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="dust" class="page">
+      <h2>启圣之尘使用优化</h2>
+      <div class="dust-panel">
+        <div class="dust-row">
+          <label for="dust-artifact-select">选择圣遗物</label>
+          <select id="dust-artifact-select" class="dust-select">
+            <option value="">— 请选择 —</option>
+          </select>
+          <label style="margin-left:0.75rem;">
+            最低锁定词条强化次数
+            <select id="dust-min-lock-rolls" class="dust-select" style="width:auto;min-width:80px;margin-left:0.35rem;">
+              <option value="2" selected>2 次</option>
+              <option value="3">3 次</option>
+              <option value="4">4 次</option>
+            </select>
+          </label>
+          <label style="margin-left:0.75rem;">
+            最大提升判定阈值
+            <span id="dust-max-threshold-help-trigger" class="dust-help-inline">?</span>
+            <input id="dust-max-threshold" class="dust-select" type="number" min="0" max="100" step="0.001" value="0"
+              style="width:6rem;margin-left:0.35rem;padding-right:0;">
+            <span style="margin-left:0.25rem;font-size:0.85rem;color:#9ab;">%</span>
+          </label>
+          <button type="button" id="dust-calc-btn" class="dust-calc-btn" style="margin-left:0.75rem;">计算</button>
+          <button type="button" id="dust-auto-btn" class="dust-calc-btn" style="margin-left:auto;">一键搜索最优方案</button>
+        </div>
+        <div class="dust-layout">
+          <div class="dust-left">
+            <div class="artifact-effective-substats">
+              <span class="artifact-effective-substats-label">锁定副词条:</span>
+              <div id="dust-substats-list" class="artifact-effective-substats-list"></div>
+            </div>
+            <p class="cycle-buff-select-hint">请选择 2 个要锁定的副词条，再点击「计算」。</p>
+          </div>
+          <div class="dust-right" id="dust-result" aria-live="polite">
+            <p class="dust-result-line"><span class="dust-label">原循环总伤害</span><span id="dust-original-total">—</span>
+            </p>
+            <p class="dust-result-line"><span class="dust-label">期望循环总伤害</span><span id="dust-expected-max">—</span></p>
+            <p class="dust-result-line"><span class="dust-label">最大提升</span><span id="dust-max-delta">—</span></p>
+            <p class="dust-result-line"><span class="dust-label">提升概率</span><span id="dust-prob-improve">—</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="artifact-auto-best-modal" class="modal-overlay modal-secondary">
+    <div class="modal">
+      <div class="modal-title">一键配置最优套装</div>
+      <div id="artifact-auto-best-content" class="buff-note-content"></div>
+      <div class="modal-actions modal-actions-top">
+        <button type="button" class="modal-btn modal-btn-cancel" id="artifact-auto-best-close">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="dust-auto-modal" class="modal-overlay modal-secondary">
+    <div class="modal">
+      <div class="modal-title">启圣之尘一键搜索最优方案</div>
+      <div id="dust-auto-result" class="buff-note-content"></div>
+      <div class="modal-actions modal-actions-top dust-auto-actions">
+        <button type="button" class="modal-btn modal-btn-cancel" id="dust-auto-close">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="dust-auto-loading-modal" class="modal-overlay modal-secondary">
+    <div class="modal">
+      <div class="modal-title">启圣之尘一键搜索最优方案</div>
+      <div class="buff-note-content">
+        计算中，请稍候……
+      </div>
+    </div>
+  </div>
+
+  <div id="dust-max-threshold-help-modal" class="modal-overlay modal-secondary">
+    <div class="modal">
+      <div class="modal-title">最大提升判定阈值说明</div>
+      <div class="buff-note-content">
+        伤害提升大于等于「最大值」的概率高于此阈值时，才会计入最大值的统计。
+        如果设置为 0%，计算出的最大值就是字面意义上的最大可能值，反之阈值越高则该「最大值」越有可能达到。
+        *此阈值只影响最大提升相关结果，对期望提升的计算没有影响。
+      </div>
+      <div class="modal-actions modal-actions-top">
+        <button type="button" class="modal-btn modal-btn-cancel" id="dust-max-threshold-help-close">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="artifact-new-modal" class="modal-overlay modal-secondary">
+    <div class="modal">
+      <div class="modal-title">新建圣遗物</div>
+      <form id="artifact-new-form">
+        <div class="modal-row">
+          <label>圣遗物名</label>
+          <input type="text" name="name" required placeholder="必填">
+        </div>
+        <div class="modal-row">
+          <label>所属套装</label>
+          <select name="setId" id="artifact-set-select"></select>
+        </div>
+        <div class="modal-row">
+          <label>主词条</label>
+          <select name="mainStat" id="artifact-main-stat"></select>
+        </div>
+        <div class="modal-row">
+          <label>等级</label>
+          <input type="number" name="level" min="1" max="20" value="20" step="1" required>
+        </div>
+        <div class="modal-row">
+          <label>最大强化次数</label>
+          <div>
+            <label style="margin-right:0.75rem;"><input type="radio" name="maxRolls" value="4"> 4次</label>
+            <label><input type="radio" name="maxRolls" value="5" checked> 5次</label>
+          </div>
+        </div>
+        <div class="modal-row" id="artifact-substats-area">
+          <label>副词条</label>
+          <div id="artifact-substats-list"></div>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="modal-btn modal-btn-submit">确定</button>
+          <button type="button" class="modal-btn modal-btn-cancel" id="artifact-new-modal-cancel">取消</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="artifact-view-modal" class="modal-overlay modal-secondary">
+    <div class="modal">
+      <div class="modal-title">圣遗物详情</div>
+      <div id="artifact-view-content" class="buff-note-content"></div>
+      <div class="modal-actions modal-actions-top">
+        <button type="button" class="modal-btn modal-btn-cancel" id="artifact-view-close">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="artifact-set-effect-modal" class="modal-overlay modal-secondary">
+    <div class="modal">
+      <div id="artifact-set-effect-modal-title" class="modal-title">添加套装效果</div>
+      <form id="artifact-set-effect-form">
+        <div class="modal-row">
+          <label>套装名</label>
+          <input type="text" name="setName" id="artifact-set-name" placeholder="圣遗物套装名">
+        </div>
+        <div class="modal-row">
+          <label>二件套效果</label>
+          <div id="artifact-two-piece-checks" class="artifact-set-effect-checks"></div>
+        </div>
+        <div class="modal-row">
+          <label>四件套效果</label>
+          <div id="artifact-four-piece-checks" class="artifact-set-effect-checks"></div>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="modal-btn modal-btn-submit">确定</button>
+          <button type="button" class="modal-btn modal-btn-cancel" id="artifact-set-effect-modal-cancel">取消</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="buff-note-modal" class="modal-overlay buff-note-modal">
+    <div class="modal">
+      <div class="modal-title">备注</div>
+      <div id="buff-note-content" class="buff-note-content"></div>
+      <div class="modal-actions modal-actions-top">
+        <button type="button" class="modal-btn modal-btn-cancel" id="buff-note-close">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cycle-buffs-display-modal" class="modal-overlay modal-secondary">
+    <div class="modal">
+      <div class="modal-title">受到加成</div>
+      <div id="cycle-buffs-display-content" class="buff-note-content"></div>
+      <div class="modal-actions modal-actions-top">
+        <button type="button" class="modal-btn modal-btn-cancel" id="cycle-buffs-display-close">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cycle-stats-panel-modal" class="modal-overlay modal-secondary">
+    <div class="modal">
+      <div class="modal-title">此时角色面板</div>
+      <div id="cycle-stats-panel-content" class="cycle-stats-panel-content"></div>
+      <div class="modal-actions modal-actions-top">
+        <button type="button" class="modal-btn modal-btn-cancel" id="cycle-stats-panel-close">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cycle-template-modal" class="modal-overlay modal-secondary">
+    <div class="modal">
+      <div id="cycle-template-modal-title" class="modal-title">新建加成模板</div>
+      <form id="cycle-template-form">
+        <div class="modal-row">
+          <label>模板名</label>
+          <input type="text" name="name" required placeholder="例如：单人循环 / 多人循环">
+        </div>
+        <div class="modal-row cycle-template-row-checks">
+          <label>包含的加成</label>
+          <div id="cycle-template-checks-wrap" class="cycle-template-checks-wrap">
+            <div id="cycle-template-checks" class="cycle-buff-checks"></div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="modal-btn modal-btn-submit">确定</button>
+          <button type="button" class="modal-btn modal-btn-cancel" id="cycle-template-cancel">取消</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="cycle-buff-select-modal" class="modal-overlay modal-secondary">
+    <div class="modal">
+      <div class="modal-title">选择受到加成</div>
+      <p class="cycle-buff-select-hint">*无需在此处勾选圣遗物套装加成</p>
+      <div id="cycle-buff-checks-container" class="cycle-buff-checks"></div>
+      <div class="modal-actions modal-actions-top">
+        <button type="button" class="modal-btn modal-btn-submit" id="cycle-buff-select-confirm">确定</button>
+        <button type="button" class="modal-btn modal-btn-cancel" id="cycle-buff-select-cancel">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cycle-flow-modal" class="modal-overlay cycle-flow-modal">
+    <div class="modal">
+      <div id="cycle-modal-title" class="modal-title">新建行</div>
+      <form id="cycle-flow-form">
+        <div class="modal-row">
+          <label>伤害类型</label>
+          <select name="damageType" id="cycle-damage-type-select">
+            <option value="direct">直伤</option>
+            <option value="transformative">剧变反应</option>
+          </select>
+        </div>
+        <div class="modal-row" id="cycle-transformative-options" style="display:none;">
+          <label>剧变类型</label>
+          <select name="reaction" id="cycle-reaction-select">
+            <option value="swirl">扩散</option>
+            <option value="overload">超载</option>
+            <option value="shatter">碎冰</option>
+          </select>
+        </div>
+        <div class="modal-row" id="cycle-swirl-element-row" style="display:none;">
+          <label>扩散元素（抗性取该元素）</label>
+          <select name="swirlElement" id="cycle-swirl-element-select">
+            <option value="pyro">火</option>
+            <option value="hydro">水</option>
+            <option value="electro">雷</option>
+            <option value="cryo">冰</option>
+          </select>
+        </div>
+        <div class="modal-row cycle-direct-only">
+          <label>伤害名</label>
+          <input type="text" name="damageName" placeholder="选填">
+        </div>
+        <div class="modal-row cycle-direct-only">
+          <label>伤害元素</label>
+          <select name="element" id="cycle-element-select"></select>
+        </div>
+        <div class="modal-row cycle-direct-only">
+          <label>增幅反应</label>
+          <select name="amplify" id="cycle-amplify-select"></select>
+        </div>
+        <div class="modal-row">
+          <label>造成次数</label>
+          <input type="number" name="count" min="1" value="1" step="1" placeholder="默认1">
+        </div>
+        <div class="modal-row cycle-direct-only">
+          <label>伤害属性倍率（%）</label>
+          <div class="cycle-rate-inputs">
+            <div class="modal-row">
+              <label>生命值</label>
+              <input type="number" name="rateHp" step="any" value="0" placeholder="%">
+            </div>
+            <div class="modal-row">
+              <label>攻击力</label>
+              <input type="number" name="rateAtk" step="any" value="0" placeholder="%">
+            </div>
+            <div class="modal-row">
+              <label>防御力</label>
+              <input type="number" name="rateDef" step="any" value="0" placeholder="%">
+            </div>
+            <div class="modal-row">
+              <label>元素精通</label>
+              <input type="number" name="rateEm" step="any" value="0" placeholder="%">
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <label>受到加成</label>
+          <button type="button" id="cycle-buff-select-btn" class="cycle-buff-select-btn">
+            <span id="cycle-buff-select-preview" class="cycle-buff-select-preview">（无）</span>
+            <span>选择</span>
+          </button>
+        </div>
+        <div class="modal-row">
+          <label>备注</label>
+          <input type="text" name="note" placeholder="选填">
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="modal-btn modal-btn-submit">确定</button>
+          <button type="button" class="modal-btn modal-btn-cancel" id="cycle-modal-cancel">取消</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="buff-new-modal" class="modal-overlay">
+    <div class="modal">
+      <div id="buff-modal-title" class="modal-title">新建加成</div>
+      <form id="buff-new-form">
+        <div class="modal-row">
+          <label>加成名 <span class="required">*</span></label>
+          <input type="text" name="name" required placeholder="必填">
+        </div>
+        <div class="modal-row">
+          <label>加成内容</label>
+          <select name="content" id="buff-content-select">
+            <option value="">-- 请选择 --</option>
+          </select>
+        </div>
+        <div class="modal-row modal-row-check">
+          <input type="checkbox" id="buff-is-percent" name="isPercent" checked>
+          <label for="buff-is-percent">百分比加成</label>
+        </div>
+        <div class="modal-row modal-row-check">
+          <input type="checkbox" id="buff-is-artifact" name="isArtifactBuff">
+          <label for="buff-is-artifact">圣遗物加成</label>
+        </div>
+        <div class="modal-row" id="buff-artifact-pieces-row" style="display:none;">
+          <label>件数</label>
+          <select name="artifactPieces" id="buff-artifact-pieces">
+            <option value="2">2件</option>
+            <option value="4">4件</option>
+          </select>
+        </div>
+        <div class="modal-row">
+          <label>数值</label>
+          <input type="number" id="buff-value" name="value" step="any" placeholder="必填">
+        </div>
+        <div class="modal-row">
+          <label>触发条件</label>
+          <input type="text" name="condition" placeholder="选填">
+        </div>
+        <div class="modal-row">
+          <label>持续时间</label>
+          <input type="number" name="duration" step="any" placeholder="选填">
+        </div>
+        <div class="modal-row">
+          <label>备注</label>
+          <input type="text" name="note" placeholder="选填">
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="modal-btn modal-btn-submit">确定</button>
+          <button type="button" class="modal-btn modal-btn-cancel" id="buff-modal-cancel">取消</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/constants.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/damage.js"></script>
+  <script src="js/dust.js"></script>
+  <script src="js/frost.js"></script>
+  <script src="js/base-panel.js"></script>
+  <script src="js/buffs.js"></script>
+  <script src="js/cycle-flow.js"></script>
+  <script src="js/artifacts.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/calc-damage.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/save-load.js"></script>
+</body>
+
+</html>

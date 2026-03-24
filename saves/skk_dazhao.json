@@ -1,0 +1,461 @@
+{
+  "version": 1,
+  "basePanel": {
+    "charLevel": "90",
+    "monsterLevel": "90",
+    "hp": "0",
+    "atk": "1033",
+    "def": "0",
+    "em": "0",
+    "er": "0",
+    "critRate": "27.1",
+    "critDmg": "88.4",
+    "resistPhys": "10",
+    "resistPyro": "10",
+    "resistHydro": "10",
+    "resistElectro": "10",
+    "resistCryo": "10",
+    "resistAnemo": "10",
+    "resistDendro": "10",
+    "resistGeo": "10"
+  },
+  "buffs": [
+    {
+      "id": 1,
+      "panelIndex": 8,
+      "name": "skk锁配队",
+      "content": "special",
+      "contentLabel": "百分比增伤",
+      "isPercent": true,
+      "value": "60",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 2,
+      "panelIndex": 2,
+      "name": "skk 3枚裂隙",
+      "content": "dmgBonus",
+      "contentLabel": "百分比增伤",
+      "isPercent": true,
+      "value": "11",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 3,
+      "panelIndex": 1,
+      "name": "蛇之狡谋（二命22层）",
+      "content": "atkMult",
+      "contentLabel": "攻击力倍率加成",
+      "isPercent": true,
+      "value": "765.16",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 4,
+      "panelIndex": 0,
+      "name": "skk专武被动攻击力",
+      "content": "atk",
+      "contentLabel": "攻击力",
+      "isPercent": true,
+      "value": "24",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 5,
+      "panelIndex": 3,
+      "name": "skk专武被动暴伤",
+      "content": "critDmg",
+      "contentLabel": "暴击伤害加成",
+      "isPercent": true,
+      "value": "40",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 7,
+      "panelIndex": 2,
+      "name": "深廊终曲二件套",
+      "content": "dmgBonus",
+      "contentLabel": "百分比增伤",
+      "isPercent": true,
+      "value": "15",
+      "condition": "冰伤",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 8,
+      "panelIndex": 2,
+      "name": "深廊终曲四件套",
+      "content": "dmgBonus",
+      "contentLabel": "百分比增伤",
+      "isPercent": true,
+      "value": "60",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 9,
+      "panelIndex": 2,
+      "name": "水神Q满层",
+      "content": "dmgBonus",
+      "contentLabel": "百分比增伤",
+      "isPercent": true,
+      "value": "124",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 10,
+      "panelIndex": 6,
+      "name": "akf减抗",
+      "content": "resistReduct",
+      "contentLabel": "降低敌人抗性",
+      "isPercent": true,
+      "value": "55",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 11,
+      "panelIndex": 0,
+      "name": "akf大公鸡",
+      "content": "atk",
+      "contentLabel": "攻击力",
+      "isPercent": true,
+      "value": "20",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 12,
+      "panelIndex": 0,
+      "name": "莫娜大公鸡",
+      "content": "atk",
+      "contentLabel": "攻击力",
+      "isPercent": true,
+      "value": "48",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 13,
+      "panelIndex": 2,
+      "name": "莫娜增伤",
+      "content": "dmgBonus",
+      "contentLabel": "百分比增伤",
+      "isPercent": true,
+      "value": "60",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    },
+    {
+      "id": 14,
+      "panelIndex": 3,
+      "name": "双冰暴击",
+      "content": "critRate",
+      "contentLabel": "暴击加成",
+      "isPercent": true,
+      "value": "15",
+      "condition": "",
+      "duration": "",
+      "note": "",
+      "isArtifactBuff": false,
+      "artifactPieces": null
+    }
+  ],
+  "cycleFlow": [
+    {
+      "id": 1,
+      "damageType": "direct",
+      "reaction": "",
+      "swirlElement": "",
+      "damageName": "丝柯克大招前5段",
+      "count": 5,
+      "rateHp": "0",
+      "rateAtk": "221.0",
+      "rateDef": "0",
+      "rateEm": "0",
+      "element": "cryo",
+      "amplify": "",
+      "buffRefs": [
+        "skk锁配队",
+        "skk 3枚裂隙",
+        "蛇之狡谋（二命22层）",
+        "skk专武被动攻击力",
+        "skk专武被动暴伤",
+        "深廊终曲二件套",
+        "深廊终曲四件套",
+        "水神Q满层",
+        "akf减抗",
+        "akf大公鸡",
+        "莫娜大公鸡",
+        "莫娜增伤",
+        "双冰暴击"
+      ],
+      "note": ""
+    },
+    {
+      "id": 2,
+      "damageName": "丝柯克大招终结",
+      "count": 1,
+      "rateHp": "0",
+      "rateAtk": "368.3",
+      "rateDef": "0",
+      "rateEm": "0",
+      "element": "cryo",
+      "amplify": "",
+      "buffRefs": [
+        "skk锁配队",
+        "skk 3枚裂隙",
+        "蛇之狡谋（二命22层）",
+        "skk专武被动攻击力",
+        "skk专武被动暴伤",
+        "深廊终曲二件套",
+        "深廊终曲四件套",
+        "水神Q满层",
+        "akf减抗",
+        "akf大公鸡",
+        "莫娜大公鸡",
+        "莫娜增伤",
+        "双冰暴击"
+      ],
+      "note": "",
+      "damageType": "direct",
+      "reaction": "",
+      "swirlElement": ""
+    }
+  ],
+  "artifacts": {
+    "0": [
+      {
+        "slotIndex": 0,
+        "name": "1",
+        "setId": 1,
+        "mainStat": "hp",
+        "level": 20,
+        "maxRolls": 5,
+        "substats": [
+          {
+            "stat": "cr",
+            "value": "6.6"
+          },
+          {
+            "stat": "cd",
+            "value": "30.3"
+          },
+          {
+            "stat": "atk",
+            "value": "18"
+          },
+          {
+            "stat": "def",
+            "value": "32"
+          }
+        ]
+      }
+    ],
+    "1": [
+      {
+        "slotIndex": 1,
+        "name": "1",
+        "setId": 1,
+        "mainStat": "flat_atk",
+        "level": 20,
+        "maxRolls": 5,
+        "substats": [
+          {
+            "stat": "cd",
+            "value": "22.5"
+          },
+          {
+            "stat": "cr",
+            "value": "9.3"
+          },
+          {
+            "stat": "def",
+            "value": "23"
+          },
+          {
+            "stat": "hp",
+            "value": "239"
+          }
+        ]
+      }
+    ],
+    "2": [
+      {
+        "slotIndex": 2,
+        "name": "1",
+        "setId": 1,
+        "mainStat": "atk",
+        "level": 20,
+        "maxRolls": 5,
+        "substats": [
+          {
+            "stat": "cr",
+            "value": "11.7"
+          },
+          {
+            "stat": "cd",
+            "value": "18.7"
+          },
+          {
+            "stat": "atk",
+            "value": "14"
+          },
+          {
+            "stat": "def",
+            "value": "21"
+          }
+        ]
+      }
+    ],
+    "3": [
+      {
+        "slotIndex": 3,
+        "name": "1",
+        "setId": 1,
+        "mainStat": "atk",
+        "level": 20,
+        "maxRolls": 5,
+        "substats": [
+          {
+            "stat": "cd",
+            "value": "22.5"
+          },
+          {
+            "stat": "cr",
+            "value": "6.6"
+          },
+          {
+            "stat": "hp",
+            "value": "299"
+          },
+          {
+            "stat": "atk",
+            "value": "35"
+          }
+        ]
+      }
+    ],
+    "4": [
+      {
+        "slotIndex": 4,
+        "name": "1",
+        "setId": 1,
+        "mainStat": "cd",
+        "level": 20,
+        "maxRolls": 5,
+        "substats": [
+          {
+            "stat": "atk_pct",
+            "value": "12.8"
+          },
+          {
+            "stat": "cr",
+            "value": "9.7"
+          },
+          {
+            "stat": "atk",
+            "value": "19"
+          },
+          {
+            "stat": "er",
+            "value": "12.3"
+          }
+        ]
+      }
+    ]
+  },
+  "setEffects": [
+    {
+      "id": 1,
+      "twoPiece": [
+        "深廊终曲二件套"
+      ],
+      "fourPiece": [
+        "深廊终曲四件套"
+      ],
+      "setName": "深廊终曲"
+    }
+  ],
+  "equippedArtifacts": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0
+  },
+  "effectiveSubstats": [
+    "atk_pct",
+    "cr",
+    "cd"
+  ],
+  "cycleBuffTemplates": [
+    {
+      "id": 1,
+      "name": "skkQ",
+      "buffRefs": [
+        "skk锁配队",
+        "skk 3枚裂隙",
+        "蛇之狡谋（二命22层）",
+        "skk专武被动攻击力",
+        "skk专武被动暴伤",
+        "深廊终曲二件套",
+        "深廊终曲四件套",
+        "水神Q满层",
+        "akf减抗",
+        "akf大公鸡",
+        "莫娜大公鸡",
+        "莫娜增伤",
+        "双冰暴击"
+      ]
+    }
+  ],
+  "counters": {
+    "setEffectIdCounter": 2,
+    "buffIdCounter": 15,
+    "cycleFlowIdCounter": 2,
+    "cycleBuffTemplateIdCounter": 1
+  }
+}
